@@ -1,6 +1,6 @@
 # Analysis of dynamic metrics in multilayer networks
 
-![Image text](https://github.com/hqw15/DynamicMultilayerNetworkAnalysis/blob/main/img/main.png)
+![Image text](https://github.com/hqw15/DMMN/blob/main/img/main.png)
 
 ## Introduction
 
