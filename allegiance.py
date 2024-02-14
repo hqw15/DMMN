@@ -21,12 +21,9 @@ class AllegianceMat:
         self.node_num = utils_define.node_num
         self.reader = DataReader()
 
-        print(self.reader.get_before_score('FMA'))
-
     def ReadMat(self, data_type='P', fun=ge50, name=''):
         assert data_type in self.sub_dir
         fma = self.reader.get_before_score('FMA')
-        print(len(fma))
         mat_list = list()
         data_paths = glob.glob(
             f"{self.exp_dir}/allegiance_matrix/{data_type}_*.txt")

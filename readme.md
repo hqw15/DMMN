@@ -1,6 +1,6 @@
 # Analysis of dynamic metrics in multilayer networks
 
-![Image text](https://github.com/hqw15/DMMN/blob/main/img/main.png)
+![Image text](https://github.com/hqw15/DMMN/blob/master/img/main.png)
 
 ## Introduction
 
@@ -25,3 +25,4 @@ Follow these steps to use the code:
 
 2. Run `python3 main.py`. This will calculate the variations in the metrics obtained in step 1 between HCs and Patients. The results will be saved in `metric_txt`.
 
+3. Run `python3 allegiance.py`. This calculates the modular loyalty matrix for healthy, mild and severe patients respectively.
