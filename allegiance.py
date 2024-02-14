@@ -1,6 +1,7 @@
 import glob
 import numpy as np
-from data_reader import DataReader
+import utils.define as utils_define
+from utils.common import DataReader
 
 
 def ge50(x):
@@ -15,23 +16,28 @@ class AllegianceMat:
 
     def __init__(self):
 
+        self.sub_dir = utils_define.sub_dir
+        self.exp_dir = utils_define.exp_dir
+        self.node_num = utils_define.node_num
         self.reader = DataReader()
 
+        print(self.reader.get_before_score('FMA'))
+
     def ReadMat(self, data_type='P', fun=ge50, name=''):
-        assert data_type in ('P', 'H')
+        assert data_type in self.sub_dir
         fma = self.reader.get_before_score('FMA')
+        print(len(fma))
         mat_list = list()
         data_paths = glob.glob(
-            f"preprocess_result/50_90/allegiance_matrix/{data_type}_*.txt")
+            f"{self.exp_dir}/allegiance_matrix/{data_type}_*.txt")
         data_paths.sort()
 
-        for p in data_paths:
-            idx = int(p.split("/")[-1].split('.')[0][-2:])
+        for idx, p in enumerate(data_paths):
             if data_type == 'P' and fun(fma[idx - 1]):
                 continue
             mat = self.reader.read_two_dim_data(p, convert_numpy=True)
-            assert mat.shape[0] == 90
-            assert mat.shape[1] == 90
+            assert mat.shape[0] == self.node_num
+            assert mat.shape[1] == self.node_num
             mat_list.append(mat)
 
         mat_list = np.array(mat_list)
@@ -45,9 +51,10 @@ class AllegianceMat:
             3: 'Default Mode System',
             4: 'Subcortical  System'
         }
-        final_mat = np.zeros([5, 5])
-        for i in range(5):
-            for j in range(5):
+        network_num = len(network_id)
+        final_mat = np.zeros([network_num, network_num])
+        for i in range(network_num):
+            for j in range(network_num):
                 n1 = network_id[i]
                 n2 = network_id[j]
                 idx1_list = self.reader.network[n1]

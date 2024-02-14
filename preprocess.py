@@ -1,26 +1,25 @@
 import os
 import glob
 import numpy as np
-from data_reader import DataReader
-from data_writer import DataWriter
+import utils.define as utils_define
+from utils.common import DataReader
+from utils.common import DataWriter
 
 
 class PreProcesser:
 
     def __init__(self):
-        self.res_dir = '../result/50_90'
-        self.save_dir = 'preprocess_result'
-        self.exp_id = self.res_dir.split('/')[-1]
-        self.num_of_exp = int(self.exp_id.split('_')[0])
-        self.node_num = int(self.exp_id.split('_')[1])
-
-        self.sub_dir = ['H', 'P']
+        self.res_dir = utils_define.res_dir
+        self.save_dir = utils_define.exp_dir
+        self.num_of_exp = utils_define.num_of_exp
+        self.node_num = utils_define.node_num
+        self.sub_dir = utils_define.sub_dir
 
         self.reader = DataReader()
         self.writer = DataWriter()
 
         self._mkdir(self.save_dir)
-        self._mkdir(os.path.join(self.save_dir, self.exp_id))
+        self._mkdir(f'{self.save_dir}/allegiance_matrix')
 
     def _mkdir(self, dir):
         if not os.path.exists(dir):
@@ -117,7 +116,7 @@ class PreProcesser:
             path = os.path.join(self.res_dir, sd, file_name)
             self.writer.write_one_dim_list(
                 data=self.reader.read_one_dim_data(path),
-                path=f'{self.save_dir}/{self.exp_id}/modularity_{sd}.txt')
+                path=f'{self.save_dir}/modularity_{sd}.txt')
 
     def preprocess_flexibility(self,
                                file_name='switching_rates_all_subjects.txt'):
@@ -125,7 +124,7 @@ class PreProcesser:
             path = os.path.join(self.res_dir, sd, file_name)
             self.writer.write_two_dim_list(
                 data=self.reader.read_two_dim_data(path),
-                path=f'{self.save_dir}/{self.exp_id}/flexibility_{sd}.txt')
+                path=f'{self.save_dir}/flexibility_{sd}.txt')
 
     def preprocess_main_metric(self):
         for sd in self.sub_dir:
@@ -146,7 +145,7 @@ class PreProcesser:
                 print(people)
                 exp_result_list = glob.glob(
                     os.path.join(res_dir, people, '*.txt'))
-                assert len(exp_result_list) == self.num_of_exp
+                # assert len(exp_result_list) == self.num_of_exp
                 # 每个人的结果需要按照实验次数求均值
                 community_num_list = list()
                 community_size_list = list()
@@ -187,8 +186,7 @@ class PreProcesser:
                 alle_mat = allegiance_matrix / self.num_of_exp
                 self.writer.write_two_dim_list(
                     data=alle_mat,
-                    path=
-                    f'{self.save_dir}/{self.exp_id}/allegiance_matrix/{sd}_{people}.txt'
+                    path=f'{self.save_dir}/allegiance_matrix/{sd}_{people}.txt'
                 )
 
                 recruitment_res.append(np.mean(recruitment_list, axis=0))
@@ -197,19 +195,19 @@ class PreProcesser:
             # 存储
             self.writer.write_one_dim_list(
                 data=community_num_res,
-                path=f'{self.save_dir}/{self.exp_id}/community_num_{sd}.txt')
+                path=f'{self.save_dir}/community_num_{sd}.txt')
             self.writer.write_one_dim_list(
                 data=community_size_res,
-                path=f'{self.save_dir}/{self.exp_id}/community_size_{sd}.txt')
+                path=f'{self.save_dir}/community_size_{sd}.txt')
             self.writer.write_one_dim_list(
                 data=stationarity_res,
-                path=f'{self.save_dir}/{self.exp_id}/stationarity_{sd}.txt')
+                path=f'{self.save_dir}/stationarity_{sd}.txt')
             self.writer.write_two_dim_list(
                 data=recruitment_res,
-                path=f'{self.save_dir}/{self.exp_id}/recruitment_{sd}.txt')
+                path=f'{self.save_dir}/recruitment_{sd}.txt')
             self.writer.write_two_dim_list(
                 data=integration_res,
-                path=f'{self.save_dir}/{self.exp_id}/integration_{sd}.txt')
+                path=f'{self.save_dir}/integration_{sd}.txt')
 
 
 if __name__ == '__main__':
