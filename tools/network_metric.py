@@ -39,7 +39,20 @@ class NetworkMetrics:
                                         f'\t网络: {network}')
                 for k, v in network_res[i].items():
                     self._logging_writer.write(v)
-                
+            if 1:
+                common_utils.write_head(self._logging_writer, '具体数据')
+                network_data_dict = self._reader.get_network_mean_data(
+                    data_dict)
+                for network in self._reader.network:
+                    common_utils.write_item(self._logging_writer,
+                                            f'\t网络: {network}')
+                    data = network_data_dict[network]
+                    for k, v in data.items():
+                        self._logging_writer.write(f'\t\t - {k}: ')
+                        for i in v:
+                            self._logging_writer.write(f'{i} ')
+                        self._logging_writer.write('\n')
+
     def _compute_whole_head(self, data_dict):
         # 全脑
         head_res = statistics_utils.measure_metric(dh=data_dict['H'].mean(1),
@@ -49,4 +62,3 @@ class NetworkMetrics:
             common_utils.write_item(self._logging_writer, '\t全脑:')
             for k, v in head_res.items():
                 self._logging_writer.write(v)
-                

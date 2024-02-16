@@ -1,4 +1,5 @@
 res_dir = 'data/result'
+# res_dir = '../各个参数结果/2_1'
 exp_dir = 'data/preprocess_result'
 sub_dir = ['H', 'P']
 node_num = 90

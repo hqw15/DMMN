@@ -30,6 +30,7 @@ def get_data_by_name(info_mat, header, name):
     data = [int(v) for v in data]
     return data
 
+
 class DataReader:
 
     def __init__(self):
