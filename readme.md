@@ -11,11 +11,10 @@ This repository serves as a dedicated tool for the processing of results obtaine
 To utilize this code, you'll need to download the 
 result file for the multilayer community network(GenLouvain) to the `/data` directory. 
 This result files related to modularity, flexibility, and the module assignment results of each experiment.
-You have two options:
 
-1. **Manual Download**: Download the [result file](https://1drv.ms/u/s!AiRytlmhzEl-hFIAeB9bNqZMqbpy?e=0mK70I) and save them in the `/data` directory.
+<!-- 1. **Manual Download**: Download the [result file](https://1drv.ms/u/s!AiRytlmhzEl-hFIAeB9bNqZMqbpy?e=0mK70I) and save them in the `/data` directory. -->
 
-2. **Use the Provided Archive**: Alternatively, you can extract the contents of `/data/result.zip`. 
+- **Use the Provided Archive**: Alternatively, you can extract the contents of `/data/result.zip`. 
 
 ## Usage
 
